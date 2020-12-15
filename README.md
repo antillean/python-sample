@@ -38,3 +38,7 @@ The paths of interest are:
    ```
 5. `PUT 127.0.0.1:500/users/<username>` to update the specified user. (Creating with this method isn't supported yet.)
    The body format is the same as the one for `POST /users`. You can only update the user's email address.
+
+## Development
+
+This project uses mypy for static type checking. Before committing any code, run `mypy sample` from the repo root and make sure that it returns no errors. See [the mypy cheat sheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html) for help.
