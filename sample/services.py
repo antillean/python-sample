@@ -23,13 +23,15 @@ class UserService:
     @staticmethod
     def create_user(user_dto: UserDTO) -> int:
         assert user_dto
-        user_model = UserRepository.create_user(username=user_dto.name, email=user_dto.email)
+        user_model = UserRepository.create_user(username=user_dto.name, email=user_dto.email,
+                                                first_name=user_dto.first_name, surname=user_dto.surname)
 
         return cast(int, user_model.uid)
 
     @staticmethod
     def update_user(user_dto: UserDTO) -> UserDTO:
         assert user_dto
-        user_model = UserRepository.update_user(username=user_dto.name, email=user_dto.email)
+        user_model = UserRepository.update_user(username=user_dto.name, email=user_dto.email,
+                                                first_name=user_dto.first_name, surname=user_dto.surname)
 
         return UserDTO.from_model(user_model)

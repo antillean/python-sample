@@ -26,7 +26,7 @@ def get_user(username: str) -> Dict[str, Any]:
 @app.route('/users', methods=['POST'])
 def create_user() -> Dict[str, int]:
     request_body = request.json
-    user_dto = UserDTO(name=request_body['username'], email=request_body['email'])
+    user_dto = UserDTO.from_request(request_body)
 
     uid = UserService.create_user(user_dto)
     return {"uid": uid}
@@ -35,7 +35,7 @@ def create_user() -> Dict[str, int]:
 @app.route('/users/<username>', methods=['PUT'])
 def update_user(username: str) -> Dict[str, Any]:
     request_body = request.json
-    user_dto = UserDTO(name=request_body['username'], email=request_body['email'])
+    user_dto = UserDTO.from_request(request_body)
 
     UserService.update_user(user_dto)
     return UserService.get_user_by_name(username).to_dict()

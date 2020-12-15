@@ -19,15 +19,15 @@ class UserRepository:
         return cast(UserModel, UserModel.query.filter_by(username=name).first())
 
     @staticmethod
-    def create_user(*, username: str, email: str) -> UserModel:
-        user = UserModel(username=username, email=email)
+    def create_user(*, username: str, email: str, first_name: str, surname: str) -> UserModel:
+        user = UserModel(username=username, email=email, first_name=first_name, surname=surname)
         db.session.add(user)
         db.session.commit()
 
         return user
 
     @staticmethod
-    def update_user(*, username: str, email: str) -> UserModel:
+    def update_user(*, username: str, email: str, first_name: str, surname: str) -> UserModel:
         user_model = UserRepository.get_user_by_name(username)
         user_model.email = email
 
