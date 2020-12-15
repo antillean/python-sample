@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, cast
 
 from sample.dtos import UserDTO
 from sample.repositories import UserRepository
 
 
 class UserService:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     @staticmethod
@@ -25,11 +25,11 @@ class UserService:
         assert user_dto
         user_model = UserRepository.create_user(username=user_dto.name, email=user_dto.email)
 
-        return user_model.uid
+        return cast(int, user_model.uid)
 
     @staticmethod
     def update_user(user_dto: UserDTO) -> UserDTO:
         assert user_dto
         user_model = UserRepository.update_user(username=user_dto.name, email=user_dto.email)
 
-        return user_model
+        return UserDTO.from_model(user_model)

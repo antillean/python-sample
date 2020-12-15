@@ -8,7 +8,7 @@ from sample.services import UserService
 
 
 @app.route('/', methods=['GET'])
-def hello_world():
+def hello_world() -> str:
     return 'Hello, World!'
 
 
@@ -19,7 +19,7 @@ def get_list() -> Dict[str, Any]:
 
 
 @app.route('/users/<username>', methods=['GET'])
-def get_user(username: str) -> UserDTO:
+def get_user(username: str) -> Dict[str, Any]:
     return UserService.get_user_by_name(username).to_dict()
 
 
@@ -33,9 +33,9 @@ def create_user() -> Dict[str, int]:
 
 
 @app.route('/users/<username>', methods=['PUT'])
-def update_user(username) -> UserDTO:
+def update_user(username: str) -> Dict[str, Any]:
     request_body = request.json
     user_dto = UserDTO(name=request_body['username'], email=request_body['email'])
 
-    uid = UserService.update_user(user_dto)
+    UserService.update_user(user_dto)
     return UserService.get_user_by_name(username).to_dict()

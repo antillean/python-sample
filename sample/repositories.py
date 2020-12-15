@@ -1,20 +1,22 @@
-from typing import List
+from typing import List, cast
+
+from flask_sqlalchemy import SQLAlchemy
 
 from sample import db
 from sample.models import UserModel
 
 
 class UserRepository:
-    def __init__(self):
-        self.db = db
+    def __init__(self) -> None:
+        self.db: SQLAlchemy = db
 
     @staticmethod
     def get_all_users() -> List[UserModel]:
-        return UserModel.query.all()
+        return cast(List[UserModel], UserModel.query.all())
 
     @staticmethod
     def get_user_by_name(name: str) -> UserModel:
-        return UserModel.query.filter_by(username=name).first()
+        return cast(UserModel, UserModel.query.filter_by(username=name).first())
 
     @staticmethod
     def create_user(*, username: str, email: str) -> UserModel:
