@@ -39,6 +39,32 @@ The paths of interest are:
 5. `PUT 127.0.0.1:500/users/<username>` to update the specified user. (Creating with this method isn't supported yet.)
    The body format is the same as the one for `POST /users`. You can only update the user's email address.
 
+## Tasks
+
+I use [Celery](https://flask.palletsprojects.com/en/1.1.x/patterns/celery/) for background tasks. Celery is configured to use redis on port 6379, so make sure you have a redis server running there. One way of doing that is with docker like this:
+
+```shell
+docker run -p 6379:6379 --name redis -d redis
+```
+
+You can then test the celery integration in the virtualenv with
+
+```
+export FLASK_APP=sample
+flask shell
+from sample.tasks import add_together
+result = add_together.delay(1,1)
+result.wait()
+```
+
+In a separate tab (also in the virtualenv), run
+
+```shell
+celery -A sample.celery worker --loglevel=DEBUG
+```
+
+And you should see the result (2) in the the first tab.
+
 ## Development
 
 This project uses mypy for static type checking. Before committing any code, run `mypy sample` from the repo root and make sure that it returns no errors. See [the mypy cheat sheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html) for help.
