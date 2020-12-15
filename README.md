@@ -8,16 +8,13 @@
     export FLASK_ENV=development
     ```
 4. To setup the db, in the same tab:
-   
+
    ```shell
-   createdb python-sample
-   flask shell
-   from sample import db
-   db.create_all()
-   exit()
+   alembic upgrade head
    ```
-   
-   Note: This is configured to use postgres on a machine with a user called `kwood`, so you'll need to update `sample.__init__.py` to your username. You'll also need to have psql installed locally and a postgres running locally. 
+
+   Note: This is configured to use postgres on a machine with a user called `kwood`, so you'll need to
+   update `sample.__init__.py` and `alembic.ini` to your username. You'll also need to have postgres running locally.
 5. To run the app, in the same tab:
    ```shell
    flask run
@@ -34,7 +31,9 @@ The paths of interest are:
    ```json
    {
       "username": "kwood",
-      "email": "kwood@example.com"
+      "email": "kwood@example.com",
+      "first_name": "Kamal",
+      "surname": "Wood"
    }
    ```
 5. `PUT 127.0.0.1:500/users/<username>` to update the specified user. (Creating with this method isn't supported yet.)
